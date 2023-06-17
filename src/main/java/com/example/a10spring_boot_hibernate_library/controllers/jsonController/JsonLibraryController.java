@@ -1,11 +1,10 @@
-package com.example.a10spring_boot_hibernate_library.controllers.jsonContorller;
+package com.example.a10spring_boot_hibernate_library.controllers.jsonController;
 
 import com.example.a10spring_boot_hibernate_library.entities.Library;
 import com.example.a10spring_boot_hibernate_library.services.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +19,12 @@ public class JsonLibraryController {
         this.libraryService = libraryService;
     }
 
-    @GetMapping("/jsonlibrary") //http://localhost:8080/jsonlibrary
+    @GetMapping("/jsonLibrary") //http://localhost:8080/jsonlibrary
     public List<Library> getAllBooks() {
         return libraryService.getAllBooks();
     }
 
-    @GetMapping("/jsonlibrary/{EanIsbn13}") //http://localhost:8080/jsonlibrary/EanIsbn13
+    @GetMapping("/jsonLibrary/{EanIsbn13}") //http://localhost:8080/jsonlibrary/EanIsbn13
     public Library getBooksByEanIsbn13(@PathVariable("EanIsbn13") long EanIsbn13) {
         //Pour ne pas changer la methode deja existant
         List<Library> livrestrouves = libraryService.getBookByEanIsbn13(EanIsbn13).stream().toList();
@@ -38,14 +37,14 @@ public class JsonLibraryController {
     }
 
     //ajouter un livre dans la bd
-    @PostMapping("/jsonlibrary")
+    @PostMapping("/jsonLibrary")
     public ResponseEntity<Library> ajouterNouveaulivre(@RequestBody Library nouveauLivre) {
         Library savedLivre = libraryService.createBook(nouveauLivre);
         return new ResponseEntity<>(savedLivre, HttpStatus.CREATED);
     }
 
     //modifier un livre de la bd
-    @PostMapping("/jsonlibraryModifie")
+    @PostMapping("/jsonLibraryModifie")
     public ResponseEntity<String> majlivre(@RequestBody Library majLivre) {
         if(libraryService.getBookByEanIsbn13(majLivre.getEanIsbn13()).isEmpty()) {
             String errorMessage = "L'eanIsbn13 " + majLivre.getEanIsbn13() + " n'existe pas!";
