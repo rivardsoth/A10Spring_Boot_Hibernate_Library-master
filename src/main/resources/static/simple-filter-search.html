@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Search Books</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .search-container {
+      max-width: 33%;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="search-container">
+    <h2>Search Books</h2>
+
+    <form action="/search" method="get">
+      <div class="form-group">
+        <label for="searchTerm">Search Term:</label>
+        <input type="text" class="form-control" id="searchTerm" name="searchTerm" required>
+      </div>
+
+      <div class="form-group">
+        <label for="publisher">Publishers:</label>
+        <select class="form-control" id="publisher" name="publishers" required>
+          <option value="Pearson">Pearson</option>
+          <option value="Wiley">Wiley</option>
+          <option value="Prentice Hall">Prentice Hall</option>
+          <option value="Addison-Wesley">Addison-Wesley</option>
+          <option value="Addison-Wesley Professional">Addison-Wesley Professional</option>
+          <option value="McGrawHill Higher Education">McGrawHill Higher Education</option>
+          <option value="McGraw-Hill Science/Engineering/Math">McGraw-Hill Science/Engineering/Math</option>
+          <option value="The MIT Press">The MIT Press</option>
+          <option value="O'Reilly Media">O'Reilly Media</option>
+          <option value="Pearson Education">Pearson Education</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

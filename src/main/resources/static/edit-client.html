@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Client</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 20px;
+    }
+
+    form {
+      width: 33%;
+      margin-left: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Edit Client</h1>
+
+  <form action="/editclient" method="GET">
+    <div class="form-group">
+      <label for="clientId">Client ID:</label>
+      <input type="text" id="clientId" name="id" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Edit Client</button>
+  </form>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

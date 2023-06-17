@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Results</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .thumbnail-column {
+      width: 30%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Search Results</h2>
+
+  <table class="table">
+    <thead class="thead-light">
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Publisher</th>
+      <th class="description-column">Description</th>
+      <th class="text-center thumbnail-column">Thumbnail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+      <td th:text="${book.title}"></td>
+      <td th:text="${book.creators}"></td>
+      <td th:text="${book.publisher}"></td>
+      <td th:text="${book.description}"></td>
+      <td class="text-center thumbnail-column">
+        <img th:src="@{'https://covers.openlibrary.org/b/isbn/' + ${book.eanIsbn13} + '-M.jpg'}"
+             alt="Thumbnail" width="200px">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Display the number of results -->
+  <p>Total Results: <span th:text="${books.size()}"></span></p>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

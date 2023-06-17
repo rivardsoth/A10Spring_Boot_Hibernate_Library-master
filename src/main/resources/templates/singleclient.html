@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Client Details</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 20px;
+    }
+
+    .client-details {
+      width: 50%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Client Details</h1>
+  <div class="client-details">
+    <table class="table">
+      <tbody>
+      <tr>
+        <td>Client ID:</td>
+        <td><span th:text="${singleclient.clientId}"></span></td>
+      </tr>
+      <tr>
+        <td>Client First Name:</td>
+        <td><span th:text="${singleclient.firstName}"></span></td>
+      </tr>
+      <tr>
+        <td>Client Last Name:</td>
+        <td><span th:text="${singleclient.lastName}"></span></td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td><span th:text="${singleclient.email}"></span></td>
+      </tr>
+      <tr>
+        <td>Address:</td>
+        <td><span th:text="${singleclient.address}"></span></td>
+      </tr>
+      <!-- Add more client details as needed -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

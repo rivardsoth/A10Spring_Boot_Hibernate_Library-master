@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>All Books</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 20px;
+    }
+    .thumbnail-column {
+      width: 20%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>All Books</h2>
+  <table class="table">
+    <thead class="thead-light">
+    <tr>
+      <th>Title</th>
+      <th>Creators</th>
+      <th>Description</th>
+      <th>Publisher</th>
+      <th>Price</th>
+      <th class="text-center thumbnail-column">Thumbnail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+      <td th:text="${book.title}"></td>
+      <td th:text="${book.creators}"></td>
+      <td th:text="${book.description}"></td>
+      <td th:text="${book.publisher}"></td>
+      <td th:text="${book.price}"></td>
+      <td class="text-center thumbnail-column">
+        <img th:src="@{'https://covers.openlibrary.org/b/isbn/' + ${book.eanIsbn13} + '-S.jpg'}"
+             alt="Thumbnail" width="100px">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
