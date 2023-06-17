@@ -1,5 +1,6 @@
 package com.example.a10spring_boot_hibernate_library.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderId")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderId")
 public class ClientOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -28,6 +29,7 @@ public class ClientOrder {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "clientId"/*, referencedColumnName = "clientId", insertable = false, updatable = false*/)
+    @JsonIgnore
     private Client clientByClientId;
     @OneToMany(mappedBy = "clientOrderByOrderId",
             fetch = FetchType.EAGER,//va chercher directement les orderitems
