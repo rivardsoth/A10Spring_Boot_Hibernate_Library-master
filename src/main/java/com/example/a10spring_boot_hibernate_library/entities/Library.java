@@ -38,7 +38,7 @@ public class Library {
     private Date publishDate;
     @Basic
     @Column(name = "price", nullable = false, precision = 3)
-    private BigDecimal price;
+    private double price;
     @Basic
     @Column(name = "length", nullable = false)
     private int length;
@@ -111,11 +111,11 @@ public class Library {
         this.publishDate = publishDate;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -125,42 +125,6 @@ public class Library {
 
     public void setLength(int length) {
         this.length = length;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Library library = (Library) o;
-
-        if (eanIsbn13 != library.eanIsbn13) return false;
-        if (length != library.length) return false;
-        if (title != null ? !title.equals(library.title) : library.title != null) return false;
-        if (creators != null ? !creators.equals(library.creators) : library.creators != null) return false;
-        if (firstName != null ? !firstName.equals(library.firstName) : library.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(library.lastName) : library.lastName != null) return false;
-        if (description != null ? !description.equals(library.description) : library.description != null) return false;
-        if (publisher != null ? !publisher.equals(library.publisher) : library.publisher != null) return false;
-        if (publishDate != null ? !publishDate.equals(library.publishDate) : library.publishDate != null) return false;
-        if (price != null ? !price.equals(library.price) : library.price != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (eanIsbn13 ^ (eanIsbn13 >>> 32));
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (creators != null ? creators.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
-        result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + length;
-        return result;
     }
 
     public Collection<OrderItem> getOrderItemsByEanIsbn13() {
