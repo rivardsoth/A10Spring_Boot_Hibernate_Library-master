@@ -2,6 +2,7 @@ package com.example.a10spring_boot_hibernate_library.controllers.jsonController;
 
 import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
 import com.example.a10spring_boot_hibernate_library.services.ClientOrderService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +33,7 @@ public class JsonClientOrderController {
         return clientOrderService.findClientOrderById(id);
 
     }
+
     @DeleteMapping("/jsonClientOrders/{id}")
     //PathVariable sert a extraire un parametre du URL
     public ResponseEntity<String> deleteClientOrderById(@PathVariable int id) {

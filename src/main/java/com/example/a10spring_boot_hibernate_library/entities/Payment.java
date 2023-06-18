@@ -25,6 +25,9 @@ public class Payment {
     @JoinColumn(name = "clientId", referencedColumnName = "clientId", nullable = false, insertable=false, updatable=false)
     private Client clientByClientId;
 
+    public Payment() {
+    }
+
     public int getPaymentId() {
         return paymentId;
     }

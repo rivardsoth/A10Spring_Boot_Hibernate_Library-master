@@ -1,6 +1,7 @@
 package com.example.a10spring_boot_hibernate_library.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
@@ -8,7 +9,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Collection;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "eanIsbn13")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "eanIsbn13")
 @Entity
 public class Library {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +44,13 @@ public class Library {
     @Column(name = "length", nullable = false)
     private int length;
     @OneToMany(mappedBy = "libraryByEanIsbn13")
+    @JsonIgnore
     private Collection<OrderItem> orderItemsByEanIsbn13;
     @OneToMany(mappedBy = "libraryByEanIsbn13")
     private Collection<ShoppingCart> shoppingCartsByEanIsbn13;
+
+    public Library() {
+    }
 
     public long getEanIsbn13() {
         return eanIsbn13;

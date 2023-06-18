@@ -20,6 +20,9 @@ public class UserAuthentication {
     @JoinColumn(name = "clientId", referencedColumnName = "clientId", nullable = false)
     private Client clientByClientId;
 
+    public UserAuthentication() {
+    }
+
     public int getClientId() {
         return clientId;
     }

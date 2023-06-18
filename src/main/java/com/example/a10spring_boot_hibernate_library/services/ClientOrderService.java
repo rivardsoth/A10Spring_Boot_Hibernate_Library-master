@@ -1,5 +1,6 @@
 package com.example.a10spring_boot_hibernate_library.services;
 
+import com.example.a10spring_boot_hibernate_library.entities.Client;
 import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
 import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientOrderService {
@@ -30,7 +32,8 @@ public class ClientOrderService {
 
     public boolean deleteClientOrderById(int id) {
         ClientOrder tempClientOrder = this.findClientOrderById(id);
-        if (tempClientOrder != null) {
+
+        if (tempClientOrder.getOrderDate() != null) {
             //effacer tous la liste de itemOrders du client
             List<OrderItem> liste = (List<OrderItem>) tempClientOrder.getOrderItemsByOrderId();
             if (liste != null) {
@@ -38,6 +41,8 @@ public class ClientOrderService {
                     orderItemService.deleteOrderItemById(orderItem.getId());
                 }
                 tempClientOrder.setOrderItemsByOrderId(null);
+
+
             }
             //effacer le payment du client
             /*Payment payment = tempClientOrder.getPayment();
@@ -47,7 +52,6 @@ public class ClientOrderService {
             }*/
             //mettre le client a null
             tempClientOrder.setClientByClientId(null);
-
             clientOrderRepository.save(tempClientOrder);
             clientOrderRepository.deleteById(id);
             return true;
@@ -56,6 +60,15 @@ public class ClientOrderService {
     }
 
     public ClientOrder findClientOrderById(int id) {
-        return clientOrderRepository.findById(id).get();
+        Optional<ClientOrder> clientOrderOptional = clientOrderRepository.findById(id);
+        if (clientOrderOptional.isEmpty()){
+            ClientOrder retourClientOrder = new ClientOrder();
+            retourClientOrder.setOrderId(id);
+            return  retourClientOrder;
+        }
+        else {
+            return clientOrderOptional.get();
+        }
+
     }
 }

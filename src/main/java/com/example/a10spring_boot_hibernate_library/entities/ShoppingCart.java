@@ -27,6 +27,9 @@ public class ShoppingCart {
     @JoinColumn(name = "ean_isbn13", referencedColumnName = "ean_isbn13", insertable = false, updatable = false)
     private Library libraryByEanIsbn13;
 
+    public ShoppingCart() {
+    }
+
     public int getId() {
         return id;
     }
