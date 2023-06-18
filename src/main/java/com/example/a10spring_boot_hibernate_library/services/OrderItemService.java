@@ -29,9 +29,9 @@ public class OrderItemService {
 
 
     public boolean deleteOrderItemById(int id) {
-        OrderItem tempOrderItem = this.findOrderItemById(id);
-        if (tempOrderItem.getQuantity() != null) {
-
+        Optional<OrderItem> tempOrderItemO = this.findOrderItemById(id);
+        if (tempOrderItemO.isPresent()) {
+            OrderItem tempOrderItem = tempOrderItemO.get();
             tempOrderItem.setClientOrderByOrderId(null);
             tempOrderItem.setLibraryByEanIsbn13(null);
             orderItemRepository.save(tempOrderItem);
@@ -44,14 +44,7 @@ public class OrderItemService {
         return false;
     }
 
-    public OrderItem findOrderItemById(int id) {
-        Optional<OrderItem> tempOrderItem = orderItemRepository.findById(id);
-        if (tempOrderItem.isEmpty()) {
-            OrderItem retourOrderItem = new OrderItem();
-            retourOrderItem.setId(id);
-            return retourOrderItem;
-        }
-        return tempOrderItem.get();
+    public Optional<OrderItem> findOrderItemById(int id) {
+        return orderItemRepository.findById(id);
     }
-
 }

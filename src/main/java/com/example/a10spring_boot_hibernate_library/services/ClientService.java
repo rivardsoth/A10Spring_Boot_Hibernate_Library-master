@@ -38,9 +38,9 @@ public class ClientService {
     }
 
     public boolean deleteClientById(Integer id) {
-        Client tempclient = this.getClientById(id).get();
-        if (tempclient != null) {
-
+        Optional<Client> tempclientQ = this.getClientById(id);
+        if (tempclientQ.isPresent()) {
+            Client tempclient = tempclientQ.get();
             //verifier l'existence de clientOrder
             List<ClientOrder> clientOrders = (List<ClientOrder>) tempclient.getClientOrdersByClientId();
             if (clientOrders != null) {

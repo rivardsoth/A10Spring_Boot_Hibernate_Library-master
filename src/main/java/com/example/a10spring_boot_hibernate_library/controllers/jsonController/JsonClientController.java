@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class JsonClientController {
@@ -25,15 +26,15 @@ public class JsonClientController {
     }
 
     @GetMapping("/jsonClients/{id}") //http://localhost:8080/jsonclients/id
-    public Client getClientById(@PathVariable("id") int id) {
-        //Pour ne pas changer la methode deja existant
-        List<Client> clientstrouves = clientService.getClientById(id).stream().toList();
-        Client cli = null;
-        for (Client temp: clientstrouves) {
-            cli = temp;
+    public ResponseEntity<?> getClientById(@PathVariable("id") int id) {
+        Optional<Client> optionalClient = clientService.getClientById(id);
+        if (optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+            return ResponseEntity.ok(client);
+        } else {
+            String errorMessage = "Client with ID " + id + " does not exist.";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
-        //prendre le 1er client trouvee parce que id est unique
-        return cli;
     }
 
     //ajouter un client dans la bd

@@ -33,9 +33,10 @@ public class ClientOrderService {
 
     @Transactional
     public boolean deleteClientOrderById(int id) {
-        ClientOrder tempClientOrder = this.findClientOrderById(id);
+        Optional<ClientOrder> tempClientOrderQ = this.findClientOrderById(id);
 
-        if (tempClientOrder.getOrderDate() != null) {
+        if (tempClientOrderQ.isPresent()) {
+            ClientOrder tempClientOrder = tempClientOrderQ.get();
             //effacer tous la liste de itemOrders du client
             List<OrderItem> liste = (List<OrderItem>) tempClientOrder.getOrderItemsByOrderId();
             if (liste != null) {
@@ -60,16 +61,7 @@ public class ClientOrderService {
         return false;
     }
 
-    public ClientOrder findClientOrderById(int id) {
-        Optional<ClientOrder> clientOrderOptional = clientOrderRepository.findById(id);
-        if (clientOrderOptional.isEmpty()){
-            ClientOrder retourClientOrder = new ClientOrder();
-            retourClientOrder.setOrderId(id);
-            return  retourClientOrder;
-        }
-        else {
-            return clientOrderOptional.get();
-        }
-
+    public Optional<ClientOrder> findClientOrderById(int id) {
+        return clientOrderRepository.findById(id);
     }
 }

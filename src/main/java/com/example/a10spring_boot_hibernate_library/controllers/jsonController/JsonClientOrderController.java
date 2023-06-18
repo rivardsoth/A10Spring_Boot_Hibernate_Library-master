@@ -4,6 +4,7 @@ import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
 import com.example.a10spring_boot_hibernate_library.services.ClientOrderService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class JsonClientOrderController {
@@ -28,10 +30,15 @@ public class JsonClientOrderController {
     }
 
     @GetMapping("/jsonClientOrders/{id}")//http://localhost:8080/instructors/1
-    public ClientOrder getClientOrderById(@PathVariable("id") int id) {
-        //va chercher le clientOrder
-        return clientOrderService.findClientOrderById(id);
-
+    public ResponseEntity<?> getClientOrderById(@PathVariable("id") int id) {
+        Optional<ClientOrder> optionalClientOrder = clientOrderService.findClientOrderById(id);
+        if (optionalClientOrder.isPresent()) {
+            ClientOrder clientOrder = optionalClientOrder.get();
+            return ResponseEntity.ok(clientOrder);
+        } else {
+            String errorMessage = "ClientOrder with ID " + id + " does not exist.";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+        }
     }
 
     @DeleteMapping("/jsonClientOrders/{id}")

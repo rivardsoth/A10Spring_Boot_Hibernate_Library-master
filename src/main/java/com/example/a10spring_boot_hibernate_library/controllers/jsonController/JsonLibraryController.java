@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class JsonLibraryController {
@@ -25,15 +26,15 @@ public class JsonLibraryController {
     }
 
     @GetMapping("/jsonLibrary/{EanIsbn13}") //http://localhost:8080/jsonlibrary/EanIsbn13
-    public Library getBooksByEanIsbn13(@PathVariable("EanIsbn13") long EanIsbn13) {
-        //Pour ne pas changer la methode deja existant
-        List<Library> livrestrouves = libraryService.getBookByEanIsbn13(EanIsbn13).stream().toList();
-        Library liv = null;
-        for (Library temp: livrestrouves) {
-             liv = temp;
+    public ResponseEntity<?> getClientById(@PathVariable("id") int id) {
+        Optional<Library> optionalLibrary = libraryService.getBookByEanIsbn13(id);
+        if (optionalLibrary.isPresent()) {
+            Library livre =optionalLibrary.get();
+            return ResponseEntity.ok(livre);
+        } else {
+            String errorMessage = "Livre with ID " + id + " does not exist.";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         }
-        //prendre le 1er livre trouvee parce que eanisbn13 unique
-        return liv;
     }
 
     //ajouter un livre dans la bd
