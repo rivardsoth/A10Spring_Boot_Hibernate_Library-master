@@ -39,6 +39,7 @@ public class OrderItem {
     private Library libraryByEanIsbn13;
 
     public OrderItem() {
+
     }
 
     public OrderItem(Integer quantity, Library libraryByEanIsbn13) {

@@ -39,10 +39,10 @@ public class JsonClientOrderController {
     public ResponseEntity<String> deleteClientOrderById(@PathVariable int id) {
         boolean deleted = clientOrderService.deleteClientOrderById(id);
         if (deleted) {
-            String message = "OrderItem avec ID " + id + " supprimé.";
+            String message = "ClientOrder avec ID " + id + " supprimé.";
             return ResponseEntity.ok(message);
         } else {
-            String errorMessage = "OrderItem avec ID " + id + " n'existe pas.";
+            String errorMessage = "ClientOrder avec ID " + id + " n'existe pas.";
             return ResponseEntity.badRequest().body(errorMessage);
         }
     }

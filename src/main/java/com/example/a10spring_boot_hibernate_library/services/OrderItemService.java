@@ -3,8 +3,10 @@ package com.example.a10spring_boot_hibernate_library.services;
 import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
 import com.example.a10spring_boot_hibernate_library.repository.OrderItemRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +18,7 @@ public class OrderItemService {
     private LibraryService libraryService;
 
     @Autowired //pas besoin de fair un new
-    public OrderItemService(OrderItemRepository orderItemRepository,LibraryService libraryService) {
+    public OrderItemService(OrderItemRepository orderItemRepository, LibraryService libraryService) {
         this.orderItemRepository = orderItemRepository;
         this.libraryService = libraryService;
     }
@@ -29,11 +31,14 @@ public class OrderItemService {
     public boolean deleteOrderItemById(int id) {
         OrderItem tempOrderItem = this.findOrderItemById(id);
         if (tempOrderItem.getQuantity() != null) {
+
             tempOrderItem.setClientOrderByOrderId(null);
             tempOrderItem.setLibraryByEanIsbn13(null);
             orderItemRepository.save(tempOrderItem);
             orderItemRepository.flush();
             orderItemRepository.delete(tempOrderItem);
+            orderItemRepository.flush();
+
             return true;
         }
         return false;

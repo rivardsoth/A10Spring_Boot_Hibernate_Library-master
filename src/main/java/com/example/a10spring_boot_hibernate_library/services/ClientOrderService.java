@@ -6,6 +6,7 @@ import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
 import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class ClientOrderService {
     }
 
 
+    @Transactional
     public boolean deleteClientOrderById(int id) {
         ClientOrder tempClientOrder = this.findClientOrderById(id);
 
@@ -41,8 +43,7 @@ public class ClientOrderService {
                     orderItemService.deleteOrderItemById(orderItem.getId());
                 }
                 tempClientOrder.setOrderItemsByOrderId(null);
-
-
+                clientOrderRepository.save(tempClientOrder);
             }
             //effacer le payment du client
             /*Payment payment = tempClientOrder.getPayment();
