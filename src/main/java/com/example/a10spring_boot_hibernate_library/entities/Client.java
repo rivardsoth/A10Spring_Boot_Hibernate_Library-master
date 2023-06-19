@@ -136,4 +136,8 @@ public class Client {
         //on ajoute a la liste
         this.clientOrdersByClientId.add(tempClientOrder);
     }
+
+    public void enleverClientOrder(ClientOrder tempClientOrder) {
+        this.clientOrdersByClientId.remove(tempClientOrder);
+    }
 }

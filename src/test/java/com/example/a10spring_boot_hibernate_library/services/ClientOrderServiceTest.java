@@ -3,6 +3,8 @@ package com.example.a10spring_boot_hibernate_library.services;
 import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
 import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
+import com.example.a10spring_boot_hibernate_library.repository.ClientRepository;
+import com.example.a10spring_boot_hibernate_library.repository.OrderItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,10 +22,12 @@ public class ClientOrderServiceTest {
 
     @Mock
     private ClientOrderRepository clientOrderRepository;
-
+    @Mock
     private PaymentService paymentService;
     @Mock
-    private OrderItemService orderItemService;
+    private OrderItemRepository orderItemRepository;
+    @Mock
+    private ClientRepository clientRepository;
 
     @InjectMocks
     private ClientOrderService clientOrderService;
@@ -31,7 +35,7 @@ public class ClientOrderServiceTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        clientOrderService = new ClientOrderService(clientOrderRepository, orderItemService, paymentService);
+        clientOrderService = new ClientOrderService(clientOrderRepository, orderItemRepository, paymentService, clientRepository);
     }
 
     @Test
@@ -74,7 +78,6 @@ public class ClientOrderServiceTest {
 
         assertFalse(isDeleted);
         verify(clientOrderRepository, times(1)).findById(id);
-        verify(orderItemService, never()).deleteOrderItemById(anyInt());
         verify(clientOrderRepository, never()).save(any(ClientOrder.class));
         verify(clientOrderRepository, never()).deleteById(anyInt());
     }

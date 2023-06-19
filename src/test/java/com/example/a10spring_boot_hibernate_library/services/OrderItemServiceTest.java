@@ -1,6 +1,7 @@
 package com.example.a10spring_boot_hibernate_library.services;
 
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
+import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
 import com.example.a10spring_boot_hibernate_library.repository.OrderItemRepository;
 import com.example.a10spring_boot_hibernate_library.services.LibraryService;
 import com.example.a10spring_boot_hibernate_library.services.OrderItemService;
@@ -26,6 +27,8 @@ public class OrderItemServiceTest {
 
     @Mock
     private LibraryService libraryService;
+    @Mock
+    private ClientOrderRepository clientOrderRepository;
 
     @InjectMocks
     private OrderItemService orderItemService;
@@ -33,7 +36,7 @@ public class OrderItemServiceTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        orderItemService = new OrderItemService(orderItemRepository, libraryService);
+        orderItemService = new OrderItemService(orderItemRepository, libraryService, clientOrderRepository);
     }
 
     @Test

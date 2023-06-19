@@ -2,6 +2,7 @@ package com.example.a10spring_boot_hibernate_library.services;
 
 import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
+import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
 import com.example.a10spring_boot_hibernate_library.repository.OrderItemRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,14 @@ public class OrderItemService {
 
     private OrderItemRepository orderItemRepository;
     private LibraryService libraryService;
+    private ClientOrderRepository clientOrderRepository;
 
     @Autowired //pas besoin de fair un new
-    public OrderItemService(OrderItemRepository orderItemRepository, LibraryService libraryService) {
+    public OrderItemService(OrderItemRepository orderItemRepository, LibraryService libraryService, ClientOrderRepository clientOrderRepository) {
         this.orderItemRepository = orderItemRepository;
         this.libraryService = libraryService;
+        this.clientOrderRepository = clientOrderRepository;
+
     }
 
     public List<OrderItem> findall() {
@@ -32,6 +36,12 @@ public class OrderItemService {
         Optional<OrderItem> tempOrderItemO = this.findOrderItemById(id);
         if (tempOrderItemO.isPresent()) {
             OrderItem tempOrderItem = tempOrderItemO.get();
+            ClientOrder clientOrder = clientOrderRepository.findById(tempOrderItem.getClientOrderByOrderId().getOrderId()).get();
+            //mettre le total a jour
+            if (clientOrder.getOrderItemsByOrderId().contains(tempOrderItem)) {
+                clientOrder.enleverOrderItem(tempOrderItem);
+                clientOrderRepository.save(clientOrder);
+            }
             tempOrderItem.setClientOrderByOrderId(null);
             tempOrderItem.setLibraryByEanIsbn13(null);
             orderItemRepository.save(tempOrderItem);

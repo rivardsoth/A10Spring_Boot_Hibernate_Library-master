@@ -107,4 +107,12 @@ public class ClientOrder {
         //mettre a jour le total de la commande
         this.totalAmount += (tempOrderItem.getPrice() * tempOrderItem.getQuantity());
     }
+
+    public void enleverOrderItem(OrderItem tempOrderItem) {
+        //mettre a jour le total de la commande
+        this.totalAmount -= (tempOrderItem.getPrice() * tempOrderItem.getQuantity());
+        //on retire de la liste
+        this.orderItemsByOrderId.remove(tempOrderItem);
+
+    }
 }
