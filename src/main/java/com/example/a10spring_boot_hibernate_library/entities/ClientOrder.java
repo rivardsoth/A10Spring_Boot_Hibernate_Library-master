@@ -37,9 +37,9 @@ public class ClientOrder {
                     CascadeType.PERSIST, CascadeType.REFRESH})
     private Collection<OrderItem> orderItemsByOrderId;
 
-    /*@OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="paymentId")//colonne de jointure (clé étrangère)
-    private Payment payment;*/
+    private Payment payment;
 
     public ClientOrder() {
     }
@@ -48,13 +48,13 @@ public class ClientOrder {
         this.orderDate = orderDate;
     }
 
-    /*public Payment getPayment() {
+    public Payment getPayment() {
         return payment;
     }
 
     public void setPayment(Payment payment) {
         this.payment = payment;
-    }*/
+    }
     public int getOrderId() {
         return orderId;
     }

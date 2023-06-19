@@ -3,6 +3,7 @@ package com.example.a10spring_boot_hibernate_library.services;
 import com.example.a10spring_boot_hibernate_library.entities.Client;
 import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
+import com.example.a10spring_boot_hibernate_library.entities.Payment;
 import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,14 @@ public class ClientOrderService {
     private ClientOrderRepository clientOrderRepository;
 
     private OrderItemService orderItemService;
-    /*@Autowired
-    private PaymentService paymentService;*/
+
+    private PaymentService paymentService;
 
     @Autowired //pas besoin de faire un new
-    public ClientOrderService(ClientOrderRepository clientOrderRepository, OrderItemService orderItemService) {
+    public ClientOrderService(ClientOrderRepository clientOrderRepository, OrderItemService orderItemService, PaymentService paymentService) {
         this.clientOrderRepository = clientOrderRepository;
         this.orderItemService = orderItemService;
+        this.paymentService = paymentService;
     }
 
     public List<ClientOrder> findall() {
@@ -47,11 +49,11 @@ public class ClientOrderService {
                 clientOrderRepository.save(tempClientOrder);
             }
             //effacer le payment du client
-            /*Payment payment = tempClientOrder.getPayment();
+            Payment payment = tempClientOrder.getPayment();
             if (payment != null) {
                 paymentService.deletePaymentById(payment.getPaymentId());
                 tempClientOrder.setPayment(null);
-            }*/
+            }
             //mettre le client a null
             tempClientOrder.setClientByClientId(null);
             clientOrderRepository.save(tempClientOrder);

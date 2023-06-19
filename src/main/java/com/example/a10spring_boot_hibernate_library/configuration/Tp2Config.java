@@ -3,6 +3,7 @@ package com.example.a10spring_boot_hibernate_library.configuration;
 import com.example.a10spring_boot_hibernate_library.entities.Client;
 import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
+import com.example.a10spring_boot_hibernate_library.entities.Payment;
 import com.example.a10spring_boot_hibernate_library.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,25 +18,27 @@ public class Tp2Config implements CommandLineRunner {
     private LibraryRepository libraryRepository;
     private ClientOrderRepository clientOrderRepository;
     private OrderItemRepository orderItemRepository;
+    private PaymentRepository paymentRepository;
 
 
     @Autowired
-    public Tp2Config(ClientRepository clientRepository, LibraryRepository libraryRepository, ClientOrderRepository clientOrderRepository, OrderItemRepository orderItemRepository) {
+    public Tp2Config(ClientRepository clientRepository, LibraryRepository libraryRepository, ClientOrderRepository clientOrderRepository, OrderItemRepository orderItemRepository, PaymentRepository paymentRepositor) {
         this.clientRepository = clientRepository;
         this.libraryRepository = libraryRepository;
         this.clientOrderRepository = clientOrderRepository;
         this.orderItemRepository = orderItemRepository;
+        this.paymentRepository = paymentRepositor;
 
     }
 
     @Override
     public void run(String... args) throws Exception {
 
-        initialiserAvecDelete(clientOrderRepository, orderItemRepository);
-        createDonneesPourBd(clientRepository, libraryRepository, clientOrderRepository, orderItemRepository);
+        initialiserAvecDelete(clientOrderRepository, orderItemRepository, paymentRepository);
+        createDonneesPourBd(clientRepository, libraryRepository, clientOrderRepository, orderItemRepository, paymentRepository);
     }
 
-    private void createDonneesPourBd(ClientRepository clientRepository, LibraryRepository libraryRepository, ClientOrderRepository clientOrderRepository, OrderItemRepository orderItemRepository) {
+    private void createDonneesPourBd(ClientRepository clientRepository, LibraryRepository libraryRepository, ClientOrderRepository clientOrderRepository, OrderItemRepository orderItemRepository, PaymentRepository paymentRepository) {
 
         //Insertion des OrderItem de 2 clients
         //orderItems du client1
@@ -57,6 +60,14 @@ public class Tp2Config implements CommandLineRunner {
         clientOrder2.ajouterOrderItem(orderItem4);
         clientOrder2.ajouterOrderItem(orderItem5);
 
+        //Insertion des payment de 2 client
+        //Payment du client 1 et ajouter au clientOrder1
+        Payment payment1 = new Payment("numeroCarte", Date.valueOf("2023-07-12"));
+        clientOrder1.setPayment(payment1);
+        //Payment du client 2 et ajouter au clientOrder2
+        Payment payment2 = new Payment("mastercard", Date.valueOf("2028-12-15"));
+        clientOrder2.setPayment(payment2);
+
         //Sauvegarde les orderItems et les cientOrders dans la Bd
         //sauvegarde des orderItem
         orderItemRepository.save(orderItem1);
@@ -64,6 +75,11 @@ public class Tp2Config implements CommandLineRunner {
         orderItemRepository.save(orderItem3);
         orderItemRepository.save(orderItem4);
         orderItemRepository.save(orderItem5);
+
+        //sauvegarde des payments
+        paymentRepository.save(payment1);
+        paymentRepository.save(payment2);
+
         //sauvegarde des clientOrder
         clientOrderRepository.save(clientOrder1);
         clientOrderRepository.save(clientOrder2);
@@ -81,15 +97,17 @@ public class Tp2Config implements CommandLineRunner {
 
     }
 
-    private void initialiserAvecDelete(ClientOrderRepository clientOrderRepository, OrderItemRepository orderItemRepository) {
+    private void initialiserAvecDelete(ClientOrderRepository clientOrderRepository, OrderItemRepository orderItemRepository, PaymentRepository paymentRepository) {
 
        /* //effacer tous les orderItems existant
         if (!orderItemRepository.findAll().isEmpty()) {*/
             orderItemRepository.deleteAllInBatch();
+
         /*}
         //effacer tous les clientOrders existant
         if (!clientOrderRepository.findAll().isEmpty()) {*/
             clientOrderRepository.deleteAllInBatch();
+        paymentRepository.deleteAllInBatch();
         /*}*/
 
     }

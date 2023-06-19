@@ -21,6 +21,7 @@ public class ClientOrderServiceTest {
     @Mock
     private ClientOrderRepository clientOrderRepository;
 
+    private PaymentService paymentService;
     @Mock
     private OrderItemService orderItemService;
 
@@ -30,7 +31,7 @@ public class ClientOrderServiceTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        clientOrderService = new ClientOrderService(clientOrderRepository, orderItemService);
+        clientOrderService = new ClientOrderService(clientOrderRepository, orderItemService, paymentService);
     }
 
     @Test

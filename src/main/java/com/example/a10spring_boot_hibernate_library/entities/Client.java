@@ -33,8 +33,8 @@ public class Client {
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
     private Collection<ClientOrder> clientOrdersByClientId;
-    @OneToMany(mappedBy = "clientByClientId")
-    private Collection<Payment> paymentsByClientId;
+    /*@OneToMany(mappedBy = "clientByClientId")
+    private Collection<Payment> paymentsByClientId;*/
     @OneToMany(mappedBy = "clientByClientId")
     private Collection<ShoppingCart> shoppingCartsByClientId;
     @OneToOne(mappedBy = "clientByClientId")
@@ -98,13 +98,13 @@ public class Client {
         this.clientOrdersByClientId = clientOrdersByClientId;
     }
 
-    public Collection<Payment> getPaymentsByClientId() {
+    /*public Collection<Payment> getPaymentsByClientId() {
         return paymentsByClientId;
     }
 
     public void setPaymentsByClientId(Collection<Payment> paymentsByClientId) {
         this.paymentsByClientId = paymentsByClientId;
-    }
+    }*/
 
     public Collection<ShoppingCart> getShoppingCartsByClientId() {
         return shoppingCartsByClientId;
