@@ -29,7 +29,7 @@ public class JsonClientOrderController {
         return clientOrderService.findall();
     }
 
-    @GetMapping("/jsonClientOrders/{id}")//http://localhost:8080/instructors/1
+    @GetMapping("/jsonClientOrders/{id}")//http://localhost:8080/jsonClientsOrders/1
     public ResponseEntity<?> getClientOrderById(@PathVariable("id") int id) {
         Optional<ClientOrder> optionalClientOrder = clientOrderService.findClientOrderById(id);
         if (optionalClientOrder.isPresent()) {

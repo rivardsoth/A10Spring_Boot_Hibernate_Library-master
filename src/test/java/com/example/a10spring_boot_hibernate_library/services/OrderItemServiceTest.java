@@ -1,5 +1,6 @@
 package com.example.a10spring_boot_hibernate_library.services;
 
+import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
 import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
 import com.example.a10spring_boot_hibernate_library.repository.OrderItemRepository;
@@ -55,15 +56,26 @@ public class OrderItemServiceTest {
     @Test
     public void testDeleteOrderItemByIdOrderItemExists() {
         int id = 1;
+
+        // Create a sample order item
         OrderItem orderItem = new OrderItem();
-        // Set properties of the order item
+        orderItem.setQuantity(0);
+        orderItem.setId(id);
+
+        // Create a sample client order
+        ClientOrder clientOrder = new ClientOrder();
+        clientOrder.ajouterOrderItem(orderItem);
 
         when(orderItemRepository.findById(id)).thenReturn(Optional.of(orderItem));
+        when(clientOrderRepository.findById(anyInt())).thenReturn(Optional.of(clientOrder));
+        when(orderItemRepository.save(orderItem)).thenReturn(orderItem);
 
         boolean isDeleted = orderItemService.deleteOrderItemById(id);
 
         assertTrue(isDeleted);
         verify(orderItemRepository, times(1)).findById(id);
+        verify(clientOrderRepository, times(1)).findById(anyInt());
+        verify(clientOrderRepository, times(1)).save(clientOrder);
         verify(orderItemRepository, times(1)).save(orderItem);
         verify(orderItemRepository, times(1)).delete(orderItem);
     }
@@ -78,8 +90,8 @@ public class OrderItemServiceTest {
 
         assertFalse(isDeleted);
         verify(orderItemRepository, times(1)).findById(id);
+        verify(clientOrderRepository, never()).findById(anyInt());
         verify(orderItemRepository, never()).save(any(OrderItem.class));
-        verify(orderItemRepository, never()).flush();
         verify(orderItemRepository, never()).delete(any(OrderItem.class));
     }
 

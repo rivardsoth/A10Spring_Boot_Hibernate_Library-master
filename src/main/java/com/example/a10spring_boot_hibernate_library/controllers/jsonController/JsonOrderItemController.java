@@ -24,16 +24,16 @@ public class JsonOrderItemController {
         this.orderItemService = orderItemService;
     }
 
-    @GetMapping("/jsonorderItems") //http://localhost:8080/orderItems
+    @GetMapping("/jsonOrderItems") //http://localhost:8080/orderItems
     public List<OrderItem> getAllOrderItem() {
         return orderItemService.findall();
     }
 
-    @GetMapping("/jsonorderItems/{id}")//http://localhost:8080/instructors/1
-    public ResponseEntity<?> getClientById(@PathVariable("id") int id) {
-        Optional<OrderItem> optionalClient = orderItemService.findOrderItemById(id);
-        if (optionalClient.isPresent()) {
-            OrderItem orderItem = optionalClient.get();
+    @GetMapping("/jsonOrderItems/{id}")//http://localhost:8080/jsonorderItems/1
+    public ResponseEntity<?> getOrderItemById(@PathVariable("id") int id) {
+        Optional<OrderItem> optionalOrderItem = orderItemService.findOrderItemById(id);
+        if (optionalOrderItem.isPresent()) {
+            OrderItem orderItem = optionalOrderItem.get();
             return ResponseEntity.ok(orderItem);
         } else {
             String errorMessage = "OrderItem with ID " + id + " does not exist.";
@@ -41,7 +41,7 @@ public class JsonOrderItemController {
         }
     }
 
-    @DeleteMapping("/jsonorderItems/{id}")
+    @DeleteMapping("/jsonOrderItems/{id}")
     //PathVariable sert a extraire un parametre du URL
     public ResponseEntity<String> deleteOrderItemById(@PathVariable int id) {
         boolean deleted = orderItemService.deleteOrderItemById(id);
