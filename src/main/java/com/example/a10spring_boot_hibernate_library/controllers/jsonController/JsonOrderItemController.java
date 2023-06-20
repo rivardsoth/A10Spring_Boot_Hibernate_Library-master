@@ -1,15 +1,13 @@
 package com.example.a10spring_boot_hibernate_library.controllers.jsonController;
 
+import com.example.a10spring_boot_hibernate_library.entities.Client;
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
 import com.example.a10spring_boot_hibernate_library.services.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +48,20 @@ public class JsonOrderItemController {
             return ResponseEntity.ok(message);
         } else {
             String errorMessage = "OrderItem avec ID " + id + " n'existe pas.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+    }
+
+    //modifier un orderItem avec une quantite de plus
+    @PostMapping("/jsonOrderItemModifier/{id}")
+    public ResponseEntity<String> mofifierItemOrderQuantite(@PathVariable int id) {
+        boolean maj = orderItemService.updateOrderItem(id);
+        if(maj) {
+            String message = "L'id du OrderItem " + id + " a été mise à jour avec une quantité de plus!";
+            return ResponseEntity.ok(message);
+        }
+        else {
+            String errorMessage = "L'id du OrderItem " + id + " n'existe pas!";
             return ResponseEntity.badRequest().body(errorMessage);
         }
     }

@@ -115,4 +115,11 @@ public class ClientOrder {
         this.orderItemsByOrderId.remove(tempOrderItem);
 
     }
+
+    public void majPrixTotal() {
+        totalAmount = 0;
+        for (OrderItem orderItem: this.orderItemsByOrderId) {
+            totalAmount += (orderItem.getPrice() * orderItem.getQuantity());
+        }
+    }
 }

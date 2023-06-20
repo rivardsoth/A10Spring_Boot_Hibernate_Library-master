@@ -61,7 +61,9 @@ public class OrderItem {
     }
 
     public void setQuantity(Integer quantity) {
+        //quand la quantite change, le total du clientOrder change aussi
         this.quantity = quantity;
+        this.clientOrderByOrderId.majPrixTotal();
     }
 
     public double getPrice() {

@@ -5,6 +5,7 @@ import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
 import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
 import com.example.a10spring_boot_hibernate_library.repository.OrderItemRepository;
 
+import jakarta.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,5 +57,16 @@ public class OrderItemService {
 
     public Optional<OrderItem> findOrderItemById(int id) {
         return orderItemRepository.findById(id);
+    }
+
+    public boolean updateOrderItem(int id) {
+        Optional<OrderItem> orderItemOptional = orderItemRepository.findById(id);
+        if (orderItemOptional.isPresent()) {
+            OrderItem orderItem = orderItemOptional.get();
+            orderItem.setQuantity(orderItem.getQuantity() + 1);
+            orderItemRepository.save(orderItem);
+            return true;
+        }
+        return false;
     }
 }
