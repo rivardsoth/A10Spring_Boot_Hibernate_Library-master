@@ -58,11 +58,32 @@ public class JsonLibraryController {
         }
     }
 
-    /*Pas le temps de comprendre cette syntaxe
+    //va chercher selon la description et selon le publisher, mais trop long a ecrire la description au complet en json
     @GetMapping("/jsonLibrarySearch/{searchTerm}/{publishers}")
     public List<Library> searchBooks(@RequestParam("searchTerm") String searchTerm,
                               @RequestParam("publishers") List<String> publishers) {
         return libraryService.searchBooksByPublishersAndDescription(searchTerm, publishers);
-    }*/
+    }
+
+    //nos 3 filtres
+    @GetMapping("/jsonLibrarySearchByPublisher/{publisher}")
+    public List<Library> getByPublisher(@PathVariable("publisher") String publisher) {
+        return libraryService.chercherLesLivreAvecPublisher(publisher);
+    }
+
+    @GetMapping("/jsonLibrarySearchByFirstname/{firstname}")
+    public List<Library> getByFirstname(@PathVariable("firstname") String firstname) {
+        return libraryService.chercherLesLivreAvecFirstname(firstname);
+    }
+
+    @GetMapping("/jsonLibrarySearchByPriceLessThan/{price}")
+    public List<Library> getByPriceLessThan(@PathVariable("price") double price) {
+        return libraryService.chercherLesLivresinferieurEgalA(price);
+    }
+
+    @GetMapping("/jsonLibrarySearchByPublishDateGreaterThan/{date}")
+    public List<Library> getByPublishDateGreaterThan(@PathVariable("date") String date) {
+        return libraryService.chercherLaDateDePublicationSuperieurA(date);
+    }
 
 }

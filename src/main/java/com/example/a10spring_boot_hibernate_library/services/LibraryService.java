@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,23 @@ public class LibraryService {
 
     public List<Library> searchBooksByPublishersAndDescription(String searchTerm, List<String> publishers) {
         return libraryRepository.findByPublisherInAndDescriptionContaining(publishers, searchTerm);
+    }
+
+    //methode de filtre
+    public List<Library> chercherLesLivreAvecPublisher(String publisher) {
+        return libraryRepository.findByPublisherIgnoreCase(publisher);
+    }
+
+    public List<Library> chercherLesLivreAvecFirstname(String name) {
+        return libraryRepository.findByFirstNameIgnoreCase(name);
+    }
+
+    public List<Library> chercherLesLivresinferieurEgalA(double price) {
+        return libraryRepository.findByPriceLessThanEqual(price);
+    }
+
+    public List<Library> chercherLaDateDePublicationSuperieurA(String date) {
+        return libraryRepository.findByPublishDateGreaterThanEqual(Date.valueOf(date));
     }
 
 }
