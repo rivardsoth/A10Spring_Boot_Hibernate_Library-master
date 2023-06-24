@@ -21,15 +21,15 @@ public class JsonLibraryController {
     }
 
     @GetMapping("/jsonLibrary") //http://localhost:8080/jsonlibrary
-    public List<Library> getAllBooks() {
+    public List<Library> chercherTousLesBooks() {
         return libraryService.getAllBooks();
     }
 
     @GetMapping("/jsonLibrary/{EanIsbn13}") //http://localhost:8080/jsonlibrary/EanIsbn13
-    public ResponseEntity<?> getClientById(@PathVariable("id") int id) {
+    public ResponseEntity<?> getLivreById(@PathVariable("EanIsbn13") long id) {
         Optional<Library> optionalLibrary = libraryService.getBookByEanIsbn13(id);
         if (optionalLibrary.isPresent()) {
-            Library livre =optionalLibrary.get();
+            Library livre = optionalLibrary.get();
             return ResponseEntity.ok(livre);
         } else {
             String errorMessage = "Livre with ID " + id + " does not exist.";
@@ -59,11 +59,11 @@ public class JsonLibraryController {
     }
 
     //va chercher selon la description et selon le publisher, mais trop long a ecrire la description au complet en json
-    @GetMapping("/jsonLibrarySearch/{searchTerm}/{publishers}")
+    /*@GetMapping("/jsonLibrarySearch/{searchTerm}/{publishers}")
     public List<Library> searchBooks(@RequestParam("searchTerm") String searchTerm,
                               @RequestParam("publishers") List<String> publishers) {
         return libraryService.searchBooksByPublishersAndDescription(searchTerm, publishers);
-    }
+    }*/
 
     //nos 3 filtres
     @GetMapping("/jsonLibrarySearchByPublisher/{publisher}")

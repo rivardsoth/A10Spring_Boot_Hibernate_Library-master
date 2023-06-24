@@ -1,9 +1,6 @@
 package com.example.a10spring_boot_hibernate_library.services;
 
-import com.example.a10spring_boot_hibernate_library.entities.Client;
-import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
-import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
-import com.example.a10spring_boot_hibernate_library.entities.Payment;
+import com.example.a10spring_boot_hibernate_library.entities.*;
 import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
 import com.example.a10spring_boot_hibernate_library.repository.ClientRepository;
 import com.example.a10spring_boot_hibernate_library.repository.OrderItemRepository;
@@ -57,18 +54,23 @@ public class ClientOrderServiceTest {
     public void testDeleteClientOrderByIdClientOrderExists() {
         int id = 1;
 
+        // Create a sample client
+        Client client = new Client();
+        client.setClientId(id);
+
         // Create a sample client order
         ClientOrder clientOrder = new ClientOrder();
         clientOrder.setOrderId(id);
-
-        // Create a sample client
-        Client client = new Client();
-        client.ajouterClientOrder(clientOrder);
+        clientOrder.setClientByClientId(client);
 
         // Create a sample order item
-        OrderItem orderItem = new OrderItem();
-        orderItem.setQuantity(0);
+        OrderItem orderItem = new OrderItem(1,new Library());
+        orderItem.setPrice(0);
+        //orderItem.setClientOrderByOrderId(clientOrder);
+
         clientOrder.ajouterOrderItem(orderItem);
+
+        client.ajouterClientOrder(clientOrder);
 
         // Create a sample payment
         Payment payment = new Payment();
@@ -85,6 +87,7 @@ public class ClientOrderServiceTest {
         verify(clientRepository, times(1)).save(client);
         verify(paymentService, times(1)).deletePaymentById(anyInt());
         verify(clientOrderRepository, times(1)).deleteById(id);
+
     }
 
     @Test

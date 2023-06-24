@@ -47,6 +47,7 @@ public class Library {
     @JsonIgnore
     private Collection<OrderItem> orderItemsByEanIsbn13;
     @OneToMany(mappedBy = "libraryByEanIsbn13")
+    @JsonIgnore
     private Collection<ShoppingCart> shoppingCartsByEanIsbn13;
 
     public Library() {

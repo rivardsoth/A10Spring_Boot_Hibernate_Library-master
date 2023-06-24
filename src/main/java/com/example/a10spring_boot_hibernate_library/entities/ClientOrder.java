@@ -100,7 +100,7 @@ public class ClientOrder {
             orderItemsByOrderId = new ArrayList<>();
             this.totalAmount = 0;
         }
-        //faire le lien avec le client
+        //faire le lien avec le clientorder
         tempOrderItem.setClientOrderByOrderId(this);
         //on ajoute a la liste
         this.orderItemsByOrderId.add(tempOrderItem);
@@ -118,8 +118,9 @@ public class ClientOrder {
 
     public void majPrixTotal() {
         totalAmount = 0;
-        for (OrderItem orderItem: this.orderItemsByOrderId) {
+        for (OrderItem orderItem : this.orderItemsByOrderId) {
             totalAmount += (orderItem.getPrice() * orderItem.getQuantity());
         }
+
     }
 }

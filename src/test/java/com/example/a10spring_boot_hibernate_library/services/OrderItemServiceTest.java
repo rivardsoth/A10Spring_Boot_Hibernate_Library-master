@@ -1,6 +1,7 @@
 package com.example.a10spring_boot_hibernate_library.services;
 
 import com.example.a10spring_boot_hibernate_library.entities.ClientOrder;
+import com.example.a10spring_boot_hibernate_library.entities.Library;
 import com.example.a10spring_boot_hibernate_library.entities.OrderItem;
 import com.example.a10spring_boot_hibernate_library.repository.ClientOrderRepository;
 import com.example.a10spring_boot_hibernate_library.repository.OrderItemRepository;
@@ -57,14 +58,18 @@ public class OrderItemServiceTest {
     public void testDeleteOrderItemByIdOrderItemExists() {
         int id = 1;
 
+
         // Create a sample order item
-        OrderItem orderItem = new OrderItem();
-        orderItem.setQuantity(0);
+        OrderItem orderItem = new OrderItem(1,new Library());
+        //orderItem.setQuantity(0);
+        orderItem.setPrice(0);
         orderItem.setId(id);
+
 
         // Create a sample client order
         ClientOrder clientOrder = new ClientOrder();
         clientOrder.ajouterOrderItem(orderItem);
+        orderItem.setClientOrderByOrderId(clientOrder);
 
         when(orderItemRepository.findById(id)).thenReturn(Optional.of(orderItem));
         when(clientOrderRepository.findById(anyInt())).thenReturn(Optional.of(clientOrder));
